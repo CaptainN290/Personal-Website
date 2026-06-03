@@ -431,7 +431,7 @@
 
 <script>
 
- <!-- ── MUSIC PLAYER ── -->
+<!-- ── MUSIC PLAYER ── -->
 <div id="music-player">
   <button id="music-btn" onclick="toggleMusic()" title="Toggle music">▶</button>
   <span id="music-label">Play Music</span>
@@ -491,20 +491,19 @@
       label.textContent = 'Play Music';
     }
   }
-</script>
- 
- // ── TIMEZONE CARD ──
-  const MY_TZ = 'Europe/London'; // GMT / BST auto-handled
+
+  // ── TIMEZONE CARD ──
+  const MY_TZ = 'Europe/London';
 
   const zones = [
-    { label: '🇺🇸 New York (ET)',       tz: 'America/New_York' },
-    { label: '🇺🇸 Los Angeles (PT)',     tz: 'America/Los_Angeles' },
-    { label: '🇧🇷 São Paulo (BRT)',      tz: 'America/Sao_Paulo' },
-    { label: '🇩🇪 Berlin (CET)',         tz: 'Europe/Berlin' },
-    { label: '🇷🇺 Moscow (MSK)',         tz: 'Europe/Moscow' },
-    { label: '🇮🇳 India (IST)',          tz: 'Asia/Kolkata' },
-    { label: '🇯🇵 Tokyo (JST)',          tz: 'Asia/Tokyo' },
-    { label: '🇦🇺 Sydney (AEDT)',        tz: 'Australia/Sydney' },
+    { label: '🇺🇸 New York (ET)',    tz: 'America/New_York' },
+    { label: '🇺🇸 Los Angeles (PT)', tz: 'America/Los_Angeles' },
+    { label: '🇧🇷 São Paulo (BRT)',  tz: 'America/Sao_Paulo' },
+    { label: '🇩🇪 Berlin (CET)',     tz: 'Europe/Berlin' },
+    { label: '🇷🇺 Moscow (MSK)',     tz: 'Europe/Moscow' },
+    { label: '🇮🇳 India (IST)',      tz: 'Asia/Kolkata' },
+    { label: '🇯🇵 Tokyo (JST)',      tz: 'Asia/Tokyo' },
+    { label: '🇦🇺 Sydney (AEDT)',    tz: 'Australia/Sydney' },
   ];
 
   function formatInTZ(date, tz) {
@@ -515,19 +514,11 @@
 
   function updateTimes() {
     const now = new Date();
-
-    // My current time
     document.getElementById('my-time').textContent = formatInTZ(now, MY_TZ);
-
-    // Build noon-equivalent: take today in MY_TZ, set to 12:00:00
-    const myDateStr = now.toLocaleDateString('en-CA', { timeZone: MY_TZ }); // YYYY-MM-DD
-    const noonGMT = new Date(`${myDateStr}T12:00:00`); // noon in local TZ string
-    // Convert: find the UTC ms when GMT is 12:00
-    // Easier: use Intl to get GMT offset
     const gmtOffsetMin = (() => {
       const d = new Date();
       const utcStr = d.toLocaleString('en-US', { timeZone: 'UTC', hour12: false, hour:'2-digit', minute:'2-digit' });
-      const myStr  = d.toLocaleString('en-US', { timeZone: MY_TZ,  hour12: false, hour:'2-digit', minute:'2-digit' });
+      const myStr  = d.toLocaleString('en-US', { timeZone: MY_TZ, hour12: false, hour:'2-digit', minute:'2-digit' });
       const parse = s => { const [h,m] = s.split(':').map(Number); return h*60+m; };
       return parse(myStr) - parse(utcStr);
     })();
@@ -535,7 +526,6 @@
       now.getFullYear(), now.getMonth(), now.getDate(),
       12 - gmtOffsetMin / 60, 0, 0
     ));
-
     const list = document.getElementById('tz-list');
     list.innerHTML = zones.map(z => {
       const t = formatInTZ(noonUTC, z.tz);
@@ -544,7 +534,7 @@
   }
 
   updateTimes();
-  setInterval(updateTimes, 30000); // refresh every 30s
+  setInterval(updateTimes, 30000);
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
@@ -554,4 +544,4 @@
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
 </body>
-</html
+</html>
