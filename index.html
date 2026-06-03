@@ -481,7 +481,7 @@
     const label = document.getElementById('music-label');
     if (audio.paused) {
       audio.play();
-      btn.textContent   = '⏸';
+      btn.textContent   = '❚❚';
       label.textContent = 'Now Playing';
     } else {
       audio.pause();
@@ -494,14 +494,14 @@
   const MY_TZ = 'Europe/London';
 
   const zones = [
-    { label: '🇺🇸 New York (ET)',    tz: 'America/New_York' },
-    { label: '🇺🇸 Los Angeles (PT)', tz: 'America/Los_Angeles' },
-    { label: '🇧🇷 São Paulo (BRT)',  tz: 'America/Sao_Paulo' },
-    { label: '🇩🇪 Berlin (CET)',     tz: 'Europe/Berlin' },
-    { label: '🇷🇺 Moscow (MSK)',     tz: 'Europe/Moscow' },
-    { label: '🇮🇳 India (IST)',      tz: 'Asia/Kolkata' },
-    { label: '🇯🇵 Tokyo (JST)',      tz: 'Asia/Tokyo' },
-    { label: '🇦🇺 Sydney (AEDT)',    tz: 'Australia/Sydney' },
+    { label: 'New York (ET)',    tz: 'America/New_York' },
+    { label: 'Los Angeles (PT)', tz: 'America/Los_Angeles' },
+    { label: 'São Paulo (BRT)',  tz: 'America/Sao_Paulo' },
+    { label: 'Berlin (CET)',     tz: 'Europe/Berlin' },
+    { label: 'Moscow (MSK)',     tz: 'Europe/Moscow' },
+    { label: 'India (IST)',      tz: 'Asia/Kolkata' },
+    { label: 'Tokyo (JST)',      tz: 'Asia/Tokyo' },
+    { label: 'Sydney (AEDT)',    tz: 'Australia/Sydney' },
   ];
 
   function formatInTZ(date, tz) {
