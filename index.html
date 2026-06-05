@@ -604,7 +604,7 @@ function toggleMusic() {
     }
     if (_audioCtx.state === 'suspended') _audioCtx.resume();
     audio.play();
-    btn.textContent='❚❚';
+    btn.textContent='▐▐';
     label.textContent='Now Playing';
     if(vis) vis.classList.remove('idle');
     startVis();
