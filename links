@@ -1,0 +1,81 @@
+  /* ── LINKS ── */
+  .links-section {
+    background: var(--dark);
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .links-section::before {
+    content:'';
+    position:absolute; inset:0;
+    background-image:
+      radial-gradient(1px 1px at 12% 18%, rgba(255,255,255,.35) 0%, transparent 100%),
+      radial-gradient(1px 1px at 34% 65%, rgba(255,255,255,.25) 0%, transparent 100%),
+      radial-gradient(1px 1px at 72% 12%, rgba(255,255,255,.35) 0%, transparent 100%),
+      radial-gradient(1px 1px at 88% 78%, rgba(255,255,255,.25) 0%, transparent 100%),
+      radial-gradient(1px 1px at 52% 42%, rgba(255,255,255,.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 22% 88%, rgba(255,255,255,.35) 0%, transparent 100%),
+      radial-gradient(1px 1px at 93% 38%, rgba(255,255,255,.25) 0%, transparent 100%);
+    pointer-events: none;
+  }
+  .links-title {
+    font-size: clamp(1.8rem,5vw,3rem);
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: 0 0 20px rgba(74,144,217,.6);
+    margin-bottom: .5rem;
+    position: relative; z-index:1;
+  }
+  .links-sub {
+    font-family: Georgia, serif;
+    font-size: .9rem;
+    color: rgba(160,200,255,.55);
+    margin-bottom: 3rem;
+    letter-spacing: .1em;
+    position: relative; z-index:1;
+  }
+  .links-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.4rem;
+    justify-content: center;
+    max-width: 640px;
+    margin: 0 auto 3rem;
+    position: relative; z-index:1;
+  }
+  .link-item {
+    display: flex; flex-direction:column; align-items:center; gap:.5rem;
+    text-decoration: none;
+    color: rgba(180,220,255,.8);
+    transition: color .2s, transform .2s;
+  }
+  .link-item:hover { color:#fff; transform: translateY(-5px); }
+  .link-icon {
+    width:54px; height:54px; border-radius:50%;
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(74,144,217,.35);
+    display:flex; align-items:center; justify-content:center;
+    transition: background .2s, border-color .2s, box-shadow .2s;
+  }
+  .link-item:hover .link-icon {
+    background: rgba(74,144,217,.2);
+    border-color: rgba(74,144,217,.85);
+    box-shadow: 0 0 18px rgba(74,144,217,.4);
+  }
+  .link-icon svg { width:24px; height:24px; fill:currentColor; }
+  .link-label { font-size:.62rem; letter-spacing:.28em; text-transform:uppercase; }
+
+  .links-divider {
+    width:60px; height:1px;
+    background: linear-gradient(90deg,transparent,rgba(74,144,217,.5),transparent);
+    margin: 0 auto 2rem;
+  }
+  .footer-copy {
+    font-family: Georgia, serif;
+    font-size: .72rem;
+    color: rgba(160,200,255,.3);
+    letter-spacing: .15em;
+    position:relative; z-index:1;
+  }
