@@ -83,27 +83,9 @@
   }
 
 .hero-banner {
-  position: relative;
-  z-index: 2;
-  width: min(680px, 88vw);
-
   filter:
-    drop-shadow(0 0 15px rgba(74,144,217,.25))
-    drop-shadow(0 0 35px rgba(74,144,217,.15));
-
-  animation: bannerIn 1s cubic-bezier(.22,1,.36,1) both;
-
-  -webkit-mask-image: radial-gradient(
-    ellipse at center,
-    black 85%,
-    transparent 100%
-  );
-
-  mask-image: radial-gradient(
-    ellipse at center,
-    black 85%,
-    transparent 100%
-  );
+    drop-shadow(0 0 25px rgba(30,100,255,.45))
+    drop-shadow(0 0 60px rgba(30,100,255,.25));
 }
   @keyframes bannerIn {
     from { opacity:0; transform: scale(0.88) translateY(24px); }
