@@ -375,17 +375,88 @@
 @keyframes konamiFade { from { opacity:0; } to { opacity:1; } }
 @keyframes konamiPop { from { transform:scale(.8); opacity:0; } to { transform:scale(1); opacity:1; } }
 
-/* ── DAY / NIGHT ── */
-html.night-mode body { background:#0d0d1a; color:#c8d8f0; }
-html.night-mode .content { background:#0d0d1a; }
-html.night-mode .fade-title, html.night-mode .card-title, html.night-mode .cards-heading { color:#ddeeff; }
-html.night-mode .fade-body, html.night-mode .card-body { color:#8aabcc; }
-html.night-mode .fade-row { border-bottom-color:#1a2a40; }
-html.night-mode .cards-section { background:#0a0a14; }
-html.night-mode .card { background:#111827; }
-html.night-mode .fade-label { color:#5a9fd4; }
-body, .content, .card, .fade-title, .fade-body, .fade-row, .cards-section, .cards-heading {
- transition: background .7s ease, color .7s ease, border-color .7s ease;
+/* ── WIN7 INFO TAB — AERO DESKTOP BACKGROUND ── */
+#tab-info {
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(80,140,220,.35) 0%, transparent 55%),
+    radial-gradient(ellipse at 75% 70%, rgba(40,100,180,.25) 0%, transparent 50%),
+    linear-gradient(160deg, #1c3a5e 0%, #2a5c96 45%, #1a4878 75%, #0e2a4a 100%);
+  padding: 2rem 3vw 3.5rem;
+}
+
+/* Aero glass container that wraps the INFO content */
+.desktop-window {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  background: rgba(228, 242, 255, 0.91);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgba(130, 185, 240, 0.65);
+  border-radius: 8px 8px 5px 5px;
+  box-shadow:
+    0 14px 48px rgba(0, 20, 70, 0.5),
+    inset 0 1px 0 rgba(255,255,255,.75),
+    inset 0 0 0 1px rgba(255,255,255,.2);
+  overflow: hidden;
+}
+
+/* Content area inside the glass window — transparent so glass shows */
+.desktop-window .content {
+  background: transparent;
+}
+
+/* Rows in glass window */
+.desktop-window .fade-row {
+  border-bottom: 1px solid rgba(100, 165, 225, 0.22);
+}
+.desktop-window .fade-row:last-child {
+  border-bottom: none;
+}
+
+/* Cards section gets a tinted glass band */
+.desktop-window .cards-section {
+  background: rgba(190, 220, 248, 0.38);
+  border-top: 1px solid rgba(100, 165, 225, 0.25);
+}
+
+/* Individual cards — frosted glass */
+.desktop-window .card {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(120, 175, 230, 0.38);
+  border-top: 3px solid #1a56cc;
+  box-shadow:
+    0 2px 8px rgba(20, 60, 160, 0.08),
+    inset 0 1px 0 rgba(255,255,255,.85);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.desktop-window .card:hover {
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 8px 28px rgba(26, 86, 204, 0.18),
+    inset 0 1px 0 rgba(255,255,255,.9);
+  transform: translateY(-5px);
+}
+
+/* Ensure text stays readable on the glass */
+.desktop-window .fade-title  { color: #0e2040; }
+.desktop-window .fade-body   { color: #334466; }
+.desktop-window .card-title  { color: #0e2040; }
+.desktop-window .card-body   { color: #334466; }
+.desktop-window .cards-heading { color: #0e2040; }
+
+/* Win7 Aero resize grip strip at bottom of window */
+.desktop-window::after {
+  content: '';
+  display: block;
+  height: 4px;
+  background: linear-gradient(90deg,
+    rgba(80,150,230,.0) 0%,
+    rgba(80,150,230,.35) 30%,
+    rgba(80,150,230,.55) 50%,
+    rgba(80,150,230,.35) 70%,
+    rgba(80,150,230,.0) 100%
+  );
 }
 
 /* ══════════════════════════════════════════
@@ -735,7 +806,16 @@ body, .content, .card, .fade-title, .fade-body, .fade-row, .cards-section, .card
 </nav>
 
 <!-- ══ INFO TAB ══ -->
-<div id="tab-info" class="tab-panel active win7-content-chrome">
+<div id="tab-info" class="tab-panel active">
+<div class="desktop-window">
+  <div class="win7-titlebar">
+    <div class="win7-titlebar-dots">
+      <div class="win7-titlebar-dot"></div>
+      <div class="win7-titlebar-dot"></div>
+      <div class="win7-titlebar-dot"></div>
+    </div>
+    <span class="win7-titlebar-text">CaptainN29 — Personal Profile</span>
+  </div>
 <div class="content">
 
   <!-- ROW 1 — star from left -->
@@ -814,6 +894,7 @@ body, .content, .card, .fade-title, .fade-body, .fade-row, .cards-section, .card
   </div>
 
 </div><!-- /content -->
+</div><!-- /desktop-window -->
 </div><!-- /tab-info -->
 
 <!-- ══ MORE TAB ══ -->
@@ -836,11 +917,11 @@ body, .content, .card, .fade-title, .fade-body, .fade-row, .cards-section, .card
         <form id="signup-form" onsubmit="handleSignup(event)">
           <div class="win7-field">
             <label for="sub-name">Your Name</label>
-            <input class="win7-input" type="text" id="sub-name" placeholder="Enter your name" required maxlength="80">
+            <input class="win7-input" type="text" id="sub-name" name="name" placeholder="Enter your name" required maxlength="80">
           </div>
           <div class="win7-field">
             <label for="sub-email">Email Address</label>
-            <input class="win7-input" type="email" id="sub-email" placeholder="you@example.com" required maxlength="200">
+            <input class="win7-input" type="email" id="sub-email" name="email" placeholder="you@example.com" required maxlength="200">
           </div>
           <button class="win7-btn" type="submit" id="signup-btn">Subscribe</button>
           <div class="signup-msg" id="signup-msg"></div>
@@ -962,9 +1043,6 @@ body, .content, .card, .fade-title, .fade-body, .fade-row, .cards-section, .card
 </style>
 
 <script>
-// ── DAY / NIGHT MODE ──
-(function(){ const h=new Date().getHours(); if(h>=20||h<7){document.documentElement.classList.add("night-mode");}})();
-
   let _audioCtx = null, _analyser = null, _src = null, _visRAF = null;
 
 function toggleMusic() {
@@ -1071,39 +1149,39 @@ function switchTab(name) {
 
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
-// ── EMAIL BLAST SIGNUP ──
-const _sb = supabase.createClient(
-  'https://0ec90b57d6e95fcbda19832f.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJib2x0IiwicmVmIjoiMGVjOTBiNTdkNmU5NWZjYmRhMTk4MzJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4ODE1NzQsImV4cCI6MTc1ODg4MTU3NH0.9I8-U0x86Ak8t2DGaIk0HfvTSLsAyzdnz-Nw00mMkKw'
-);
-
+// ── EMAIL BLAST SIGNUP (Formspree) ──
 async function handleSignup(e) {
   e.preventDefault();
-  const btn = document.getElementById('signup-btn');
-  const msg = document.getElementById('signup-msg');
-  const name  = document.getElementById('sub-name').value.trim();
-  const email = document.getElementById('sub-email').value.trim().toLowerCase();
+  const btn  = document.getElementById('signup-btn');
+  const msg  = document.getElementById('signup-msg');
+  const form = document.getElementById('signup-form');
 
   btn.disabled = true;
   btn.textContent = 'Subscribing...';
   msg.className = 'signup-msg';
-  msg.style.display = 'none';
 
-  const { error } = await _sb.from('email_subscribers').insert({ name, email });
-
-  if (error) {
-    if (error.code === '23505') {
-      msg.textContent = "You're already subscribed. I see you.";
+  try {
+    const res = await fetch('https://formspree.io/f/mykaloyz', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        name:  document.getElementById('sub-name').value.trim(),
+        email: document.getElementById('sub-email').value.trim()
+      })
+    });
+    if (res.ok) {
+      msg.textContent = "You're in. Regret this later.";
+      msg.className = 'signup-msg success';
+      form.reset();
     } else {
-      msg.textContent = 'Something went wrong. Try again.';
+      const err = await res.json().catch(() => ({}));
+      msg.textContent = err.error || 'Something went wrong. Try again.';
+      msg.className = 'signup-msg error';
     }
+  } catch {
+    msg.textContent = 'Something went wrong. Try again.';
     msg.className = 'signup-msg error';
-  } else {
-    msg.textContent = 'You\'re in. Regret this later.';
-    msg.className = 'signup-msg success';
-    document.getElementById('signup-form').reset();
   }
 
   btn.disabled = false;
