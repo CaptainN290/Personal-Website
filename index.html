@@ -384,98 +384,158 @@
   padding: 2rem 3vw 3.5rem;
 }
 
+/* ── AERO GLASS CORE — shared by both windows ── */
+:root {
+  --aero-bg:       rgba(195, 225, 255, 0.55);
+  --aero-border:   rgba(180, 215, 255, 0.55);
+  --aero-shine:    rgba(255, 255, 255, 0.42);
+  --aero-blur:     blur(20px) saturate(185%) brightness(1.08);
+}
+
 /* Aero glass container that wraps the INFO content */
 .desktop-window {
   max-width: 1100px;
   width: 100%;
   margin: 0 auto;
-  background: rgba(228, 242, 255, 0.91);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-  border: 1px solid rgba(130, 185, 240, 0.65);
+  position: relative;
+  /* True Aero glass: low opacity so the deep-blue desktop bleeds through */
+  background: var(--aero-bg);
+  backdrop-filter: var(--aero-blur);
+  -webkit-backdrop-filter: var(--aero-blur);
+  border: 1px solid var(--aero-border);
+  border-top-color: rgba(255,255,255,.7);
   border-radius: 8px 8px 5px 5px;
   box-shadow:
-    0 14px 48px rgba(0, 20, 70, 0.5),
-    inset 0 1px 0 rgba(255,255,255,.75),
-    inset 0 0 0 1px rgba(255,255,255,.2);
+    /* outer drop shadow */
+    0 18px 56px rgba(0, 15, 60, 0.55),
+    0 4px 16px rgba(0, 20, 80, 0.3),
+    /* outer edge glow */
+    0 0 0 1px rgba(255,255,255,.18),
+    /* inner top highlight — the bright specular line */
+    inset 0 1px 0 rgba(255,255,255,.85),
+    /* inner ambient glow */
+    inset 0 0 30px rgba(180,215,255,.18);
   overflow: hidden;
 }
 
-/* Content area inside the glass window — transparent so glass shows */
-.desktop-window .content {
-  background: transparent;
+/* ── THE SIGNATURE AERO SHEEN ──
+   A white-to-transparent gradient covering the top ~40% of the panel —
+   this is the light-reflection that makes glass look like glass.         */
+.desktop-window::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 45%;
+  background: linear-gradient(to bottom,
+    rgba(255,255,255,.38) 0%,
+    rgba(255,255,255,.18) 40%,
+    rgba(255,255,255,.0)  100%
+  );
+  border-radius: 8px 8px 0 0;
+  pointer-events: none;
+  z-index: 100;
 }
 
-/* Rows in glass window */
-.desktop-window .fade-row {
-  border-bottom: 1px solid rgba(100, 165, 225, 0.22);
-}
-.desktop-window .fade-row:last-child {
-  border-bottom: none;
-}
-
-/* Cards section gets a tinted glass band */
-.desktop-window .cards-section {
-  background: rgba(190, 220, 248, 0.38);
-  border-top: 1px solid rgba(100, 165, 225, 0.25);
-}
-
-/* Individual cards — frosted glass */
-.desktop-window .card {
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(120, 175, 230, 0.38);
-  border-top: 3px solid #1a56cc;
-  box-shadow:
-    0 2px 8px rgba(20, 60, 160, 0.08),
-    inset 0 1px 0 rgba(255,255,255,.85);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-}
-.desktop-window .card:hover {
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 8px 28px rgba(26, 86, 204, 0.18),
-    inset 0 1px 0 rgba(255,255,255,.9);
-  transform: translateY(-5px);
-}
-
-/* Ensure text stays readable on the glass */
-.desktop-window .fade-title  { color: #0e2040; }
-.desktop-window .fade-body   { color: #334466; }
-.desktop-window .card-title  { color: #0e2040; }
-.desktop-window .card-body   { color: #334466; }
-.desktop-window .cards-heading { color: #0e2040; }
-
-/* Win7 Aero resize grip strip at bottom of window */
+/* Aero bottom-edge grip strip */
 .desktop-window::after {
   content: '';
   display: block;
   height: 4px;
   background: linear-gradient(90deg,
-    rgba(80,150,230,.0) 0%,
-    rgba(80,150,230,.35) 30%,
-    rgba(80,150,230,.55) 50%,
-    rgba(80,150,230,.35) 70%,
-    rgba(80,150,230,.0) 100%
+    rgba(140,195,255,.0)  0%,
+    rgba(140,195,255,.45) 30%,
+    rgba(180,220,255,.7)  50%,
+    rgba(140,195,255,.45) 70%,
+    rgba(140,195,255,.0)  100%
   );
 }
+
+/* Content area — transparent so the blue desktop tints through */
+.desktop-window .content {
+  background: transparent;
+  position: relative;
+  z-index: 1;
+}
+
+/* Rows: subtle glass divider */
+.desktop-window .fade-row {
+  border-bottom: 1px solid rgba(140, 185, 235, 0.28);
+  background: rgba(255,255,255,.06);
+}
+.desktop-window .fade-row:last-child { border-bottom: none; }
+
+/* Cards section — a deeper frosted band */
+.desktop-window .cards-section {
+  background: rgba(160, 205, 248, 0.28);
+  border-top: 1px solid rgba(140, 190, 238, 0.32);
+}
+
+/* Individual cards — layered Aero glass bubbles */
+.desktop-window .card {
+  position: relative;
+  background: rgba(235, 247, 255, 0.62);
+  border: 1px solid rgba(150, 195, 240, 0.5);
+  border-top: 3px solid rgba(30, 100, 210, 0.85);
+  backdrop-filter: blur(8px) saturate(160%);
+  -webkit-backdrop-filter: blur(8px) saturate(160%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.85),
+    inset 0 0 14px rgba(200,228,255,.2),
+    0 3px 12px rgba(20, 60, 160, 0.12);
+  overflow: hidden;
+  transition: transform .2s, box-shadow .2s, background .2s;
+}
+/* card sheen */
+.desktop-window .card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 50%;
+  background: linear-gradient(to bottom,
+    rgba(255,255,255,.32) 0%,
+    rgba(255,255,255,.0)  100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+.desktop-window .card:hover {
+  background: rgba(245, 251, 255, 0.82);
+  transform: translateY(-5px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.95),
+    inset 0 0 18px rgba(200,228,255,.3),
+    0 12px 32px rgba(26, 86, 204, 0.22);
+}
+
+/* Text: dark navy so it pops on the light glass */
+.desktop-window .fade-title   { color: #07193a; }
+.desktop-window .fade-body    { color: #243355; }
+.desktop-window .card-title   { color: #07193a; }
+.desktop-window .card-body    { color: #2a3d5c; }
+.desktop-window .cards-heading{ color: #07193a; }
+.desktop-window .fade-label   { color: #1a68c8; }
+.desktop-window .card-num     { color: rgba(26,86,204,.22); }
 
 /* ══════════════════════════════════════════
    WINDOWS 7 AERO RETRO TAB SYSTEM
 ══════════════════════════════════════════ */
 
-/* Tab nav bar — Win7 Explorer toolbar feel */
+/* Tab nav bar — Aero glass toolbar */
 .win7-tab-bar {
   position: relative;
   z-index: 10;
   background: linear-gradient(to bottom,
-    #e8f0fc 0%,
-    #d0dff5 40%,
-    #b8ceed 100%
+    rgba(210,232,255,.92) 0%,
+    rgba(165,205,248,.88) 50%,
+    rgba(130,180,240,.85) 100%
   );
-  border-bottom: 1px solid #6a9fd8;
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  border-bottom: 1px solid rgba(90, 155, 220, 0.7);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.85),
-    0 2px 6px rgba(40,80,160,.18);
+    inset 0 1px 0 rgba(255,255,255,.9),
+    inset 0 0 16px rgba(180,215,255,.3),
+    0 2px 8px rgba(20, 60,160,.22);
   display: flex;
   align-items: flex-end;
   padding: 0 clamp(1rem, 4vw, 3rem);
@@ -567,7 +627,11 @@
 
 /* ══════ MORE TAB — Email Blast Signup ══════ */
 .more-section {
-  background: linear-gradient(135deg, #e8f0fc 0%, #f4f8ff 50%, #ddeaf9 100%);
+  /* Same Win7 desktop as INFO tab for a cohesive look */
+  background:
+    radial-gradient(ellipse at 65% 25%, rgba(80,140,220,.35) 0%, transparent 55%),
+    radial-gradient(ellipse at 25% 75%, rgba(40,100,180,.25) 0%, transparent 50%),
+    linear-gradient(160deg, #1c3a5e 0%, #2a5c96 45%, #1a4878 75%, #0e2a4a 100%);
   min-height: 60vh;
   display: flex;
   flex-direction: column;
@@ -576,65 +640,110 @@
   padding: 4rem 5vw 5rem;
 }
 
+/* The form window — fully Aero glass, matching the INFO desktop-window */
 .win7-window {
-  background: linear-gradient(to bottom,
-    rgba(235,245,255,.97) 0%,
-    rgba(220,235,255,.97) 100%
-  );
-  border: 1px solid #7aaee0;
+  position: relative;
+  background: var(--aero-bg);
+  backdrop-filter: var(--aero-blur);
+  -webkit-backdrop-filter: var(--aero-blur);
+  border: 1px solid var(--aero-border);
+  border-top-color: rgba(255,255,255,.72);
   border-radius: 8px;
   box-shadow:
-    0 0 0 1px rgba(255,255,255,.5) inset,
-    0 8px 32px rgba(40,80,180,.18),
-    0 2px 8px rgba(40,80,180,.12);
+    0 18px 56px rgba(0, 15, 60, 0.55),
+    0 4px 16px rgba(0, 20, 80, 0.3),
+    0 0 0 1px rgba(255,255,255,.18),
+    inset 0 1px 0 rgba(255,255,255,.85),
+    inset 0 0 30px rgba(180,215,255,.18);
   width: 100%;
   max-width: 540px;
   overflow: hidden;
 }
-
-/* Win7-style title bar */
-.win7-titlebar {
+/* Aero sheen on the form window */
+.win7-window::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 45%;
   background: linear-gradient(to bottom,
-    #4a9de8 0%,
-    #1a6ecc 35%,
-    #0d5ab5 65%,
-    #1565c9 100%
+    rgba(255,255,255,.38) 0%,
+    rgba(255,255,255,.16) 40%,
+    rgba(255,255,255,.0)  100%
   );
-  padding: .45rem 1rem;
+  border-radius: 8px 8px 0 0;
+  pointer-events: none;
+  z-index: 100;
+}
+
+/* Win7-style title bar — rich Aero gradient with sheen */
+.win7-titlebar {
+  position: relative;
+  background: linear-gradient(to bottom,
+    rgba(120,185,255,.9)  0%,
+    rgba(50,130,230,.92) 25%,
+    rgba(20, 90,200,.95) 55%,
+    rgba(10, 70,180,.98) 75%,
+    rgba(30,100,210,.95) 100%
+  );
+  padding: .5rem 1rem;
   display: flex;
   align-items: center;
-  gap: .5rem;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.4);
+  gap: .6rem;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.6),
+    inset 0 0 12px rgba(120,185,255,.25),
+    0 1px 4px rgba(0,20,80,.4);
+  overflow: hidden;
+}
+/* Titlebar sheen — bright top reflection */
+.win7-titlebar::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 55%;
+  background: linear-gradient(to bottom,
+    rgba(255,255,255,.35) 0%,
+    rgba(255,255,255,.08) 100%
+  );
+  pointer-events: none;
 }
 .win7-titlebar-dots {
-  display: flex; gap: 4px;
+  display: flex; gap: 5px; position: relative; z-index: 1;
 }
 .win7-titlebar-dot {
   width: 12px; height: 12px; border-radius: 50%;
-  border: 1px solid rgba(0,0,0,.25);
-  background: linear-gradient(to bottom, rgba(255,255,255,.8), rgba(200,200,200,.5));
+  border: 1px solid rgba(0,0,0,.2);
+  background: linear-gradient(135deg,
+    rgba(255,255,255,.95) 0%,
+    rgba(210,210,210,.7) 100%
+  );
+  box-shadow: inset 0 1px 1px rgba(255,255,255,.8), 0 1px 2px rgba(0,0,0,.2);
 }
 .win7-titlebar-text {
   font-family: 'Segoe UI', Tahoma, sans-serif;
   font-size: .72rem;
   font-weight: 600;
   color: #fff;
-  text-shadow: 0 1px 2px rgba(0,0,80,.5);
+  text-shadow: 0 1px 3px rgba(0,0,80,.65), 0 0 8px rgba(100,170,255,.4);
   letter-spacing: .04em;
   flex: 1;
   text-align: center;
+  position: relative;
+  z-index: 1;
 }
 
 /* Window body */
 .win7-window-body {
   padding: 2rem 2.2rem 2.5rem;
+  position: relative;
+  z-index: 1;
 }
 
 .win7-window-body h2 {
   font-family: 'Segoe UI', Tahoma, sans-serif;
   font-size: clamp(1.4rem, 3.5vw, 2rem);
   font-weight: 700;
-  color: #1a3a6a;
+  color: #07193a;
   text-align: center;
   margin-bottom: .4rem;
   letter-spacing: .04em;
@@ -642,7 +751,7 @@
 .win7-window-body .sub-text {
   font-family: Georgia, serif;
   font-size: .9rem;
-  color: #4a6a9a;
+  color: #243a68;
   text-align: center;
   margin-bottom: 1.8rem;
   line-height: 1.5;
@@ -657,28 +766,36 @@
   font-family: 'Segoe UI', Tahoma, sans-serif;
   font-size: .78rem;
   font-weight: 600;
-  color: #2a4a7a;
+  color: #07193a;
   margin-bottom: .3rem;
   letter-spacing: .03em;
 }
+/* Input: glassy inset look */
 .win7-input {
   width: 100%;
   padding: .5rem .75rem;
   font-family: 'Segoe UI', Tahoma, sans-serif;
   font-size: .9rem;
-  color: #1a2a4a;
-  background: linear-gradient(to bottom, #e8f0fc, #f4f8ff);
-  border: 1px solid #7aaee0;
+  color: #07193a;
+  background: rgba(225, 240, 255, 0.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(100, 160, 220, 0.7);
+  border-top-color: rgba(60,110,190,.5);
   border-radius: 3px;
   outline: none;
-  transition: border-color .15s, box-shadow .15s;
-  box-shadow: inset 0 1px 3px rgba(40,80,160,.1);
+  transition: border-color .15s, box-shadow .15s, background .15s;
+  box-shadow:
+    inset 0 2px 4px rgba(20,60,160,.12),
+    inset 0 1px 0 rgba(0,0,0,.05);
 }
 .win7-input:focus {
-  border-color: #3a80d0;
+  background: rgba(240, 248, 255, 0.88);
+  border-color: rgba(50, 130, 230, 0.9);
   box-shadow:
-    inset 0 1px 3px rgba(40,80,160,.15),
-    0 0 0 2px rgba(58,128,208,.25);
+    inset 0 2px 4px rgba(20,60,160,.1),
+    0 0 0 2px rgba(80,155,235,.3),
+    0 0 8px rgba(80,155,235,.2);
 }
 
 /* Win7 button */
@@ -748,26 +865,44 @@
   color: #601a1a;
 }
 
-/* More tab info blurb */
+/* More tab info blurb — small Aero glass note panel */
 .blast-blurb {
+  position: relative;
   max-width: 540px;
   width: 100%;
   margin-top: 2rem;
   padding: 1.2rem 1.5rem;
-  background: linear-gradient(to bottom,
-    rgba(255,255,255,.75),
-    rgba(220,235,255,.65)
-  );
-  border: 1px solid rgba(120,170,220,.4);
+  background: rgba(185, 218, 255, 0.38);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  border: 1px solid rgba(180, 215, 255, 0.5);
+  border-top-color: rgba(255,255,255,.65);
   border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(40,80,180,.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.7),
+    0 4px 16px rgba(0,20,80,.2);
+  overflow: hidden;
+}
+.blast-blurb::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 50%;
+  background: linear-gradient(to bottom,
+    rgba(255,255,255,.28) 0%,
+    rgba(255,255,255,.0)  100%
+  );
+  pointer-events: none;
 }
 .blast-blurb p {
   font-family: Georgia, serif;
   font-size: .85rem;
-  color: #3a5a8a;
+  color: #e8f4ff;
   line-height: 1.7;
   text-align: center;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 1px 3px rgba(0,20,60,.4);
 }
 
 /* ── WIN7 RESPONSIVE ── */
