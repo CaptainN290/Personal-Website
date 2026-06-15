@@ -1203,126 +1203,149 @@
   <p class="footer-copy">&copy; 2026 CAPTAINN29 &nbsp;·&nbsp; ALL RIGHTS RESERVED BECAUSE HE'S THE KING</p>
 </section>
 
-<!-- ── MUSIC PLAYER ── -->
-<!-- Win7 Media Player 12 widget -->
+<!-- ── MUSIC PLAYER — Win7 light Aero transport bar ── -->
 <div id="music-player">
-  <!-- Title bar: orange WMP ring logo + track name -->
-  <div id="wmp-topbar">
-    <div id="wmp-logo-ring"></div>
-    <div id="wmp-track-info">
-      <div id="wmp-track-name">CaptainN29 Mix</div>
-      <span id="music-label">Paused</span>
-    </div>
-  </div>
-  <!-- Black visualizer panel -->
-  <div id="wmp-vis-area">
-    <div id="visualiser" class="idle"><div class="vbar"></div><div class="vbar"></div><div class="vbar"></div><div class="vbar"></div><div class="vbar"></div><div class="vbar"></div><div class="vbar"></div><div class="vbar"></div></div>
-  </div>
-  <!-- Transport strip: play/pause -->
-  <div id="wmp-transport">
-    <button id="music-btn" onclick="toggleMusic()" title="Play / Pause">▶</button>
-  </div>
+  <!-- Stop -->
+  <button class="wmp-sm" onclick="stopMusic()" title="Stop">&#9632;</button>
+  <!-- Prev (decorative) -->
+  <button class="wmp-sm" title="Previous">&#9664;&#9664;</button>
+  <!-- Main blue play/pause button -->
+  <button id="music-btn" onclick="toggleMusic()" title="Play / Pause">&#9654;</button>
+  <!-- Next (decorative) -->
+  <button class="wmp-sm" title="Next">&#9654;&#9654;</button>
+  <!-- Visualizer bars -->
+  <div id="visualiser" class="idle"><div class="vbar"></div><div class="vbar"></div><div class="vbar"></div><div class="vbar"></div><div class="vbar"></div><div class="vbar"></div><div class="vbar"></div><div class="vbar"></div></div>
+  <!-- Volume -->
+  <button class="wmp-sm wmp-vol" title="Volume">&#128266;</button>
+  <input type="range" id="vol-slider" min="0" max="100" value="80" title="Volume">
+  <!-- Hidden status label (used by JS) -->
+  <span id="music-label" style="display:none">Paused</span>
   <audio id="bg-music" loop>
     <source src="background_music.mp3" type="audio/mpeg">
   </audio>
 </div>
 
 <style>
-/* ── WIN7 MEDIA PLAYER 12 ── */
+/* ── WIN7 MEDIA PLAYER — LIGHT AERO TRANSPORT BAR ── */
 #music-player {
   position: fixed;
   bottom: 1rem;
   right: 1rem;
   z-index: 9999;
-  width: 198px;
-  /* Dark metallic chrome body */
-  background: linear-gradient(180deg, #1e1e1e 0%, #0e0e0e 100%);
-  border: 1px solid #2e2e2e;
-  border-top-color: #565656;
-  border-radius: 4px 4px 3px 3px;
+  display: flex;
+  align-items: center;
+  gap: .42rem;
+  padding: .5rem .7rem;
+  /* Light Aero glass — matches site's blue-silver theme */
+  background: linear-gradient(to bottom,
+    rgba(238, 247, 255, 0.95) 0%,
+    rgba(212, 232, 252, 0.92) 50%,
+    rgba(195, 220, 248, 0.95) 100%
+  );
+  border: 1px solid rgba(110, 165, 225, 0.6);
+  border-top-color: rgba(215, 238, 255, 0.98);
+  border-radius: 6px;
   box-shadow:
-    0 0 0 1px #000,
-    0 10px 28px rgba(0,0,0,.88),
-    inset 0 1px 0 rgba(255,255,255,.055);
-  overflow: hidden;
+    inset 0 1px 0 rgba(255,255,255,.92),
+    inset 0 0 12px rgba(155,205,255,.1),
+    0 5px 16px rgba(0,20,80,.22),
+    0 0 0 1px rgba(90,150,215,.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   font-family: 'Segoe UI', Tahoma, sans-serif;
   user-select: none;
 }
 
-/* Top bar — track info + logo */
-#wmp-topbar {
-  background: linear-gradient(to bottom, #252525 0%, #191919 100%);
-  border-bottom: 1px solid #080808;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
-  padding: .38rem .55rem;
-  display: flex;
-  align-items: center;
-  gap: .45rem;
-}
-
-/* WMP12 orange glowing ring */
-#wmp-logo-ring {
+/* Small control buttons (stop, prev, next, vol) */
+.wmp-sm {
   flex-shrink: 0;
-  width: 18px; height: 18px;
+  width: 22px; height: 22px;
+  border-radius: 4px;
+  border: 1px solid rgba(95, 155, 218, 0.45);
+  background: linear-gradient(to bottom,
+    rgba(228, 243, 255, 0.92) 0%,
+    rgba(195, 220, 248, 0.92) 100%
+  );
+  color: #1a3f7a;
+  font-size: .5rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.8);
+  transition: background .1s, border-color .1s;
+  padding: 0;
+}
+.wmp-sm:hover {
+  background: linear-gradient(to bottom,
+    rgba(205, 232, 255, 0.98) 0%,
+    rgba(165, 208, 248, 0.98) 100%
+  );
+  border-color: rgba(60, 140, 225, 0.65);
+}
+.wmp-sm:active { transform: scale(.88); }
+.wmp-vol { font-size: .62rem; }
+
+/* Large blue Aero play/pause button — matches screenshot */
+#music-btn {
+  flex-shrink: 0;
+  width: 40px; height: 40px;
   border-radius: 50%;
-  border: 2px solid #d97000;
+  border: 1px solid rgba(15, 75, 190, 0.75);
+  background: linear-gradient(to bottom,
+    rgba(112, 182, 252, 0.98) 0%,
+    rgba(38, 120, 228, 0.98) 48%,
+    rgba(12, 88, 200, 0.98) 100%
+  );
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  padding-left: 2px; /* optically center the ▶ */
   box-shadow:
-    0 0 5px rgba(220,112,0,.55),
-    0 0 10px rgba(220,112,0,.25),
-    inset 0 0 4px rgba(220,112,0,.35);
-  position: relative;
+    inset 0 1px 0 rgba(255,255,255,.55),
+    inset 0 -1px 0 rgba(0,0,0,.12),
+    0 0 16px rgba(35,125,240,.55),
+    0 3px 8px rgba(0,0,0,.3);
+  transition: background .18s, box-shadow .18s;
 }
-#wmp-logo-ring::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  width: 5px; height: 5px;
-  border-radius: 50%;
-  background: #e07800;
-  box-shadow: 0 0 5px rgba(220,120,0,.9);
+#music-btn:hover {
+  background: linear-gradient(to bottom,
+    rgba(135, 200, 255, 0.98) 0%,
+    rgba(62, 148, 245, 0.98) 48%,
+    rgba(30, 108, 218, 0.98) 100%
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.65),
+    inset 0 -1px 0 rgba(0,0,0,.12),
+    0 0 24px rgba(35,125,240,.75),
+    0 3px 8px rgba(0,0,0,.3);
+}
+#music-btn:active { transform: scale(.9); }
+
+/* Vertical separator */
+.wmp-sep {
+  width: 1px; height: 28px;
+  background: linear-gradient(to bottom, transparent, rgba(100,160,220,.35), transparent);
+  flex-shrink: 0;
 }
 
-#wmp-track-info { flex: 1; overflow: hidden; }
-#wmp-track-name {
-  font-size: .6rem;
-  font-weight: 600;
-  color: #d8d8d8;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  letter-spacing: .015em;
-  margin-bottom: 1px;
-}
-#music-label {
-  font-size: .54rem;
-  color: #5a5a5a;
-  letter-spacing: .01em;
-  white-space: nowrap;
-}
-
-/* Black visualiser panel */
-#wmp-vis-area {
-  background: #000;
-  padding: .35rem .55rem .3rem;
-  border-top: 1px solid #111;
-  border-bottom: 1px solid #111;
-  min-height: 40px;
+/* Visualizer — blue bars */
+#visualiser {
   display: flex;
   align-items: flex-end;
+  gap: 2px;
+  height: 20px;
+  flex-shrink: 0;
 }
-
-#visualiser { display:flex; align-items:flex-end; gap:2px; height:28px; width:100%; }
 #visualiser .vbar {
-  flex: 1;
+  width: 3px;
   border-radius: 1px 1px 0 0;
-  background: linear-gradient(to top, #cc6400 0%, #f0a030 100%);
+  background: linear-gradient(to top, #1062c8 0%, #55aaff 100%);
   min-height: 2px;
   transition: height .05s linear;
 }
 #visualiser.idle .vbar {
   animation: vIdle 1.3s ease-in-out infinite alternate;
-  background: linear-gradient(to top, #383838 0%, #4e4e4e 100%);
+  background: rgba(50, 130, 215, 0.3);
   height: 3px !important;
 }
 #visualiser.idle .vbar:nth-child(2){animation-delay:.12s;}
@@ -1332,41 +1355,39 @@
 #visualiser.idle .vbar:nth-child(6){animation-delay:.63s;}
 #visualiser.idle .vbar:nth-child(7){animation-delay:.76s;}
 #visualiser.idle .vbar:nth-child(8){animation-delay:.08s;}
-@keyframes vIdle { from { height:2px; opacity:.35; } to { height:9px; opacity:.7; } }
-
-/* Transport control strip */
-#wmp-transport {
-  background: linear-gradient(to bottom, #1a1a1a 0%, #101010 100%);
-  padding: .5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+@keyframes vIdle {
+  from { height: 2px; opacity: .25; }
+  to   { height: 10px; opacity: .55; }
 }
 
-/* Circular play/pause button — dark glass with orange glyph */
-#music-btn {
-  width: 30px; height: 30px;
-  border-radius: 50%;
-  border: 1px solid #3c3c3c;
-  background: linear-gradient(to bottom, #3a3a3a 0%, #222 50%, #1a1a1a 100%);
-  color: #d97000;
-  font-size: .8rem;
+/* Volume slider */
+#vol-slider {
+  width: 55px;
+  flex-shrink: 0;
+  accent-color: #1a6cd8;
   cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.07),
-    0 2px 5px rgba(0,0,0,.7);
-  transition: background .15s, box-shadow .15s;
+  -webkit-appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(100, 160, 220, 0.35);
+  outline: none;
 }
-#music-btn:hover {
-  background: linear-gradient(to bottom, #4a4a4a 0%, #2e2e2e 50%, #252525 100%);
-  border-color: #555;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.1),
-    0 0 10px rgba(210,112,0,.25),
-    0 2px 5px rgba(0,0,0,.7);
+#vol-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #5ab0ff, #1a6cd8);
+  border: 1px solid rgba(10,60,180,.5);
+  box-shadow: 0 0 4px rgba(30,100,220,.5);
+  cursor: pointer;
 }
-#music-btn:active { transform: scale(.92); }
+#vol-slider::-moz-range-thumb {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: #1a6cd8;
+  border: 1px solid rgba(10,60,180,.5);
+  cursor: pointer;
+}
 </style>
 
 <script>
@@ -1375,7 +1396,6 @@
 function toggleMusic() {
   const audio = document.getElementById('bg-music');
   const btn   = document.getElementById('music-btn');
-  const label = document.getElementById('music-label');
   const vis   = document.getElementById('visualiser');
 
   if (audio.paused) {
@@ -1388,19 +1408,39 @@ function toggleMusic() {
       _analyser.connect(_audioCtx.destination);
     }
     if (_audioCtx.state === 'suspended') _audioCtx.resume();
-    audio.play();
-    btn.textContent='𝗜 𝗜';
-    label.textContent='Now Playing';
+    audio.play().catch(()=>{});
+    btn.innerHTML = '&#9646;&#9646;';
     if(vis) vis.classList.remove('idle');
     startVis();
   } else {
     audio.pause();
-    btn.textContent='▶';
-    label.textContent='Paused';
+    btn.innerHTML = '&#9654;';
     if(vis) vis.classList.add('idle');
     cancelAnimationFrame(_visRAF);
   }
 }
+
+function stopMusic() {
+  const audio = document.getElementById('bg-music');
+  const btn   = document.getElementById('music-btn');
+  const vis   = document.getElementById('visualiser');
+  audio.pause();
+  audio.currentTime = 0;
+  btn.innerHTML = '&#9654;';
+  if(vis) vis.classList.add('idle');
+  cancelAnimationFrame(_visRAF);
+}
+
+(function initVol() {
+  const slider = document.getElementById('vol-slider');
+  const audio  = document.getElementById('bg-music');
+  if (slider && audio) {
+    audio.volume = slider.value / 100;
+    slider.addEventListener('input', function() {
+      audio.volume = this.value / 100;
+    });
+  }
+})();
 
   // ── TIMEZONE CARD ──
   const MY_TZ = 'Europe/London';
