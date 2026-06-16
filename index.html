@@ -45,7 +45,7 @@
 
   html { scroll-behavior: smooth; }
   body { 
-    background: var(--white); overflow-x: hidden; font-family: Impact, 'Arial Narrow', sans-serif;
+    background: var(--white); overflow-x: hidden; font-family: 'Segoe UI', Tahoma, sans-serif;
     cursor: url('cursor.png'), auto;
   }
 
@@ -127,8 +127,10 @@
     animation: bounce 2s ease-in-out infinite;
   }
   .scroll-hint span {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
     font-size: .65rem;
-    letter-spacing: .35em;
+    font-weight: 600;
+    letter-spacing: .2em;
     text-transform: uppercase;
     color: rgba(180,220,255,.85);
   }
@@ -165,9 +167,9 @@
     opacity: 0;
     transition: opacity .7s ease, transform .7s cubic-bezier(.22,1,.36,1);
   }
-  .reveal.from-left  { transform: translateX(-60px); }
-  .reveal.from-right { transform: translateX(60px); }
-  .reveal.from-below { transform: translateY(50px); }
+  .reveal.from-left  { transform: translateX(-45px); }
+  .reveal.from-right { transform: translateX(45px); }
+  .reveal.from-below { transform: translateY(40px); }
   .reveal.visible {
     opacity: 1;
     transform: translate(0,0);
@@ -188,15 +190,18 @@
 
   .fade-text { flex: 1; }
   .fade-label {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
     font-size: .7rem;
-    letter-spacing: .4em;
+    font-weight: 600;
+    letter-spacing: .25em;
     text-transform: uppercase;
     color: var(--blue-mid);
     margin-bottom: .8rem;
   }
   .fade-title {
     font-size: clamp(1.8rem, 4vw, 3rem);
-    letter-spacing: .06em;
+    font-weight: 700;
+    letter-spacing: .04em;
     text-transform: uppercase;
     color: var(--dark);
     line-height: 1.05;
@@ -405,9 +410,10 @@
   position: relative;
   z-index: 3;
   margin-top: 1rem;
-  font-family: Impact, 'Arial Narrow', sans-serif;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
   font-size: .62rem;
-  letter-spacing: .35em;
+  font-weight: 600;
+  letter-spacing: .25em;
   text-transform: uppercase;
   color: rgba(180,220,255,.6);
 }
@@ -448,7 +454,7 @@
   box-shadow: 0 0 60px rgba(26,86,204,.4);
   animation: konamiPop .4s cubic-bezier(.22,1,.36,1) both;
 }
-#konami-box p { font-family: Impact, sans-serif; font-size: 2rem; letter-spacing: .1em; color: #fff; }
+#konami-box p { font-family: 'Segoe UI', Tahoma, sans-serif; font-weight: 700; font-size: 2rem; letter-spacing: .05em; color: #fff; }
 #konami-box small { font-family: Georgia, serif; font-size: .8rem; color: rgba(180,220,255,.5); display:block; margin-top:.5rem; }
 @keyframes konamiFade { from { opacity:0; } to { opacity:1; } }
 @keyframes konamiPop { from { transform:scale(.8); opacity:0; } to { transform:scale(1); opacity:1; } }
@@ -493,7 +499,7 @@
     inset 0 1px 0 rgba(255,255,255,.85),
     /* inner ambient glow */
     inset 0 0 30px rgba(180,215,255,.18);
-  /* No overflow:hidden — that clips the sword image via transform offset */
+  overflow: hidden; /* clips children to the border-radius corners */
 }
 
 /* ── THE SIGNATURE AERO SHEEN ──
