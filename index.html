@@ -89,23 +89,6 @@
   z-index: 2;
   width: min(680px, 88vw);
   display: block;
-
-  /* Aero glass frame — directly on the image edge, no gap */
-  border: 2px solid rgba(140, 205, 255, 0.7);
-  border-radius: 10px;
-  overflow: hidden; /* clips image to the rounded corners */
-
-  /* Outer glow + inner light-blue edge sheen */
-  box-shadow:
-    0 0 0 1px rgba(200, 235, 255, 0.35),
-    0 0 20px rgba(100, 175, 255, 0.5),
-    0 0 50px rgba(74, 144, 217, 0.25),
-    inset 0 0 16px rgba(140, 200, 255, 0.18);
-
-  filter:
-    drop-shadow(0 0 15px rgba(74,144,217,.2))
-    drop-shadow(0 0 35px rgba(74,144,217,.1));
-
   animation: bannerIn 1s cubic-bezier(.22,1,.36,1) both;
 }
   @keyframes bannerIn {
@@ -1007,7 +990,7 @@
     alt=""
     loading="eager"
     fetchpriority="high">
-  <img class="hero-banner" src="banner.png" alt="CaptainN29 The Eagle">
+  <img class="hero-banner" src="./banner.png" alt="CaptainN29 The Eagle">
  <div id="visit-counter">Visitors: <span id="vc-num">...</span></div>
   <div class="scroll-hint">
     <span>Scroll</span>
@@ -1057,7 +1040,7 @@
   <!-- ROW 2 — sword from right -->
   <div class="fade-row reverse">
     <div class="fade-img-wrap reveal from-right">
-      <img src="sword.PNG" alt="Sword">
+      <img src="./sword.PNG" alt="Sword" onerror="this.closest('.fade-img-wrap').style.display='none'">
     </div>
     <div class="fade-text reveal from-left">
       <div class="fade-label">Arsenal</div>
